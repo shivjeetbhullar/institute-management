@@ -1,0 +1,158 @@
+{%extends 'jinja.html'%}
+{%block content%}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
+<style>
+  select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  outline: 0;
+  box-shadow: none;
+  border: 0 !important;
+  background: #2c3e50;
+  background-image: none;
+}
+/* Remove IE arrow */
+select::-ms-expand {
+  display: none;
+}
+/* Custom Select */
+.select {
+  position: relative;
+  display: flex;
+  height: 3em;
+  line-height: 3;
+  background: #2c3e50;
+  overflow: hidden;
+  border-radius: .25em;
+}
+select {
+  flex: 1;
+  padding: 0 .5em;
+  color: #fff;
+  cursor: pointer;
+}
+/* Arrow */
+.select::after {
+  content: '\25BC';
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0 1em;
+  background: #34495e;
+  cursor: pointer;
+  pointer-events: none;
+  -webkit-transition: .25s all ease;
+  -o-transition: .25s all ease;
+  transition: .25s all ease;
+}
+/* Transition */
+.select:hover::after {
+  color: #f39c12;
+}
+
+</style>
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-11">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">Student Name</h4>
+            <div class="select col-md-11">
+              <select name="slct" id="slct">
+                <option selected disabled>Choose Student Name</option>
+                {%for x in students['data']%}
+                
+                <option value="{{x.unid}}">{{x.name}}</option>
+                {%endfor%}
+              </select>
+            </div>
+          </div>
+          <div class="card-body">
+            <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Position</th>
+                <th>Office</th>
+                <th>Age</th>
+                <th>Start date</th>
+                <th>Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+            </tr>
+            
+            </tbody>
+            </table>
+          </div>
+          <form>
+            <div class="col-md-12" style="padding-top: 17px;">
+          
+            <div class="row">
+              <div class="col-md-8">
+                <div class="form-group">
+                  <label class="bmd-label-floating">End Session</label>
+                  <input type="date" id="datePicker" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary pull-right">Absent</button>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary pull-right">End Session</button>
+                </div>
+              </div>
+            </div>
+           
+            
+            
+          </form>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script>
+
+var date = new Date();
+var day = ("0" + date.getDate()).slice(-2);
+var month = ("0" + (date.getMonth() + 1)).slice(-2);
+
+var today = date.getFullYear() + "-" + (month) + "-" + (day);
+
+$('#datePicker').val(today);   
+  $(document).ready(function() {
+    $('#example').DataTable();
+} );
+  
+  
+$("select").change(function(){
+  $.post("/admin/result",{"unid":$(this).val()}, function(data, status){
+     if (data.attendance) {
+      $(".card-body").prepend("<h2 style='text-align:center;padding:5%'>"+data.result+"</h2>");
+     }
+     else{
+      $(".card-body").prepend("<h2 style='text-align:center;padding:5%'>No Record Found!</h2>");
+     }
+  });
+});
+
+  var element = document.getElementById("attendance");
+  element.classList.add("active");
+  </script>
+      {%endblock%}

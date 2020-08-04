@@ -1,0 +1,32 @@
+{%extends 'jinja.html'%}
+{%block content%}
+<div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+              <div class="card card-stats">
+                <div class="card-header card-header-warning card-header-icon">
+                  <div class="card-icon">
+                    <i class="material-icons">people</i>
+                  </div>
+                  <p class="card-category">Total Students</p>
+                  <h3 class="card-title">49
+                    <small>Students</small>
+                  </h3>
+                </div>
+                <div class="card-footer">
+                  <div class="stats">
+                    <i class="material-icons text-info">warning</i>
+                    <a href="javascript:;">Get Detail...</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+<script>
+    var element = document.getElementById("dash");
+  element.classList.add("active");
+</script>
+      {%endblock%}
