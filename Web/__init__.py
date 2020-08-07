@@ -1,6 +1,7 @@
 from flask import Flask
 from pi7db import pi7db
-db = pi7db('Students','DATABASE')
+
+db = pi7db('Students','Web/DATABASE')
 app = Flask(__name__)
 
 from Web.public.route import mod

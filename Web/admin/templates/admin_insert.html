@@ -33,7 +33,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label class="bmd-label-floating">His Id No</label>
-                    <input type="text" name='lname' class="form-control">
+                    <input type="text" name='id' class="form-control">
                   </div>
                 </div>
               </div>
@@ -122,5 +122,14 @@ $('#datePicker').val(today);
         }
   var element = document.getElementById("insert");
   element.classList.add("active");
+  if ("{{stdwrit}}" == 'True'){
+    $.notify({
+	// options
+	message: "Student Is Inserted!"
+},{
+	// settings
+	type: 'success'
+});
+  }
   </script>
       {%endblock%}

@@ -1,5 +1,6 @@
 {%extends 'jinja.html'%}
 {%block content%}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
 <style>
   select {
   -webkit-appearance: none;
@@ -59,8 +60,8 @@ select {
         <div class="card">
           <div class="card-header card-header-primary">
             <h4 class="card-title">Student Name</h4>
-            <div class="select col-md-11">
-
+            <div class="row">
+            <div class="select col-md-5">
               <select name="slct" id="slct">
                 <option selected disabled>Choose Student Name</option>
                 {%for x in students['data']%}
@@ -69,8 +70,33 @@ select {
                 {%endfor%}
               </select>
             </div>
+            <div class="col-md-2">
+
+            </div>
+            <div class="select col-md-5">
+
+              <select name="slct2" id="slct2">
+                <option selected disabled>Choose Exam</option>
+                
+              </select>
+            </div>
           </div>
+        </div>
           <div class="card-body">
+            <br>
+            <table id="example" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Question</th>
+                <th style="width: 30%;">His Answer</th>
+                <th style="width: 30%;">Correct Answer</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            
+            </tbody>
+            </table>
             <button class="btn btn-danger pull-right" onclick="delstudent()">Delete Student</button>
           </div>
         </div>
@@ -78,6 +104,12 @@ select {
     </div>
   </div>
 </div>
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('#example').DataTable();
+  } );
+  </script>
 <script>
   function delstudent(){
     if ($("select").val()){
@@ -85,16 +117,31 @@ select {
     }
   }
   
-  $("select").change(function(){
+  var resdata = null
+
+  $("#slct").change(function(){
   $.post("/admin/result",{"unid":$(this).val()}, function(data, status){
      if (data.result) {
-      $(".card-body").prepend("<h2 style='text-align:center;padding:5%'>"+data.result+"</h2>");
+      resdata = data.result
+      $.each(data.result, function( index, value ) {
+        $("#slct2").append("<option value='"+index+"'>"+index+"</option>");
+      }); 
+      
      }
      else{
       $(".card-body").prepend("<h2 style='text-align:center;padding:5%'>No Record Found!</h2>");
      }
   });
 });
+
+$("#slct2").change(function(){
+  $("tbody").html("")
+      $.each(JSON.parse(resdata[$(this).val()]), function( index, value ) {
+        $("tbody").append("<tr><td>"+value.que+"</td><td>"+value.choices[value.user_choice_index]+"</td><td>"+value.choices[value.correct_choice_index]+"</td></tr>");
+      }); 
+      
+});
+
   var element = document.getElementById("result");
   element.classList.add("active");
   </script>
