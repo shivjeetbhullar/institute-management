@@ -1,0 +1,163 @@
+{%extends 'jinja.html'%}
+{%block content%}
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-11">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">Insert Profile</h4>
+            <p class="card-category">Complete Profile Details</p>
+          </div>
+          <div class="card-body">
+            <form method="POST" action="/admin/insertold" enctype = "multipart/form-data">
+              <div class="col-md-12" style="padding-top: 17px;">
+                <div class="card card-profile">
+                  <div class="card-avatar">
+                    <label href="javascript:;" for="select_image">
+                      <img class="img imgcard" id="target" src="/admin/static/cdn/img/add.png" />
+                    </label>
+                  </div>
+                 
+                </div>
+              </div>
+              
+              <input style="display: none;" type="file" id="select_image" name="image" onchange="putImage()" />
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Name</label>
+                    <input type="text" name="name" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">His Id No</label>
+                    <input type="text" name='id' class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+        
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Email address</label>
+                    <input type="email" name="email" class="form-control">
+                  </div>
+                </div>
+                
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Adress</label>
+                    <input type="text" name="adress" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">City</label>
+                    <input type="text" name="city" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Joining Date</label>
+                    <input type="date" name="jdate" id="datePicker" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Course</label>
+                    <input type="text" name="course" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">End Date</label>
+                    <input type="date" name="edate" id="datePicker" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    
+                    <div class="select col-md-12">
+                      <select name="exam" id="slct">
+                        <option selected disabled>Choose Exam</option>
+                        {%for x in exams['Doc_Name']%}
+                        <option value="{{x}}">{{x}}</option>
+                        {%endfor%}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Marks %</label>
+                    <input type="number" name='marks' max="100" min="0" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>About Him</label>
+                    <div class="form-group">
+                      <label class="bmd-label-floating">Some Detail Abot Him</label>
+                      <textarea name="des" class="form-control" rows="5"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary pull-right">Insert Profile</button>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+
+
+var date = new Date();
+var day = ("0" + date.getDate()).slice(-2);
+var month = ("0" + (date.getMonth() + 1)).slice(-2);
+
+var today = date.getFullYear() + "-" + (month) + "-" + (day);
+
+$('#datePicker').val(today);
+$('input[name=edate]').val(today);
+  function showImage(src, target) {
+            var fr = new FileReader();
+
+             fr.onload = function(){
+      target.src = fr.result;
+    }
+           fr.readAsDataURL(src.files[0]);
+
+        }
+        function putImage() {
+            var src = document.getElementById("select_image");
+            var target = document.getElementById("target");
+            showImage(src, target);
+        }
+  var element = document.getElementById("insertold");
+  element.classList.add("active");
+  if ("{{stdwrit}}" == 'True'){
+    $.notify({
+	// options
+	message: "Student Is Inserted!"
+},{
+	// settings
+	type: 'success'
+});
+  }
+  </script>
+      {%endblock%}

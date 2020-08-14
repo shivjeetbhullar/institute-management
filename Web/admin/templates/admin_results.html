@@ -1,58 +1,7 @@
 {%extends 'jinja.html'%}
 {%block content%}
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-<style>
-  select {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  -ms-appearance: none;
-  appearance: none;
-  outline: 0;
-  box-shadow: none;
-  border: 0 !important;
-  background: #2c3e50;
-  background-image: none;
-}
-/* Remove IE arrow */
-select::-ms-expand {
-  display: none;
-}
-/* Custom Select */
-.select {
-  position: relative;
-  display: flex;
-  height: 3em;
-  line-height: 3;
-  background: #2c3e50;
-  overflow: hidden;
-  border-radius: .25em;
-}
-select {
-  flex: 1;
-  padding: 0 .5em;
-  color: #fff;
-  cursor: pointer;
-}
-/* Arrow */
-.select::after {
-  content: '\25BC';
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 0 1em;
-  background: #34495e;
-  cursor: pointer;
-  pointer-events: none;
-  -webkit-transition: .25s all ease;
-  -o-transition: .25s all ease;
-  transition: .25s all ease;
-}
-/* Transition */
-.select:hover::after {
-  color: #f39c12;
-}
 
-</style>
 <div class="content">
   <div class="container-fluid">
     <div class="row">
@@ -137,6 +86,7 @@ select {
 $("#slct2").change(function(){
   $("tbody").html("")
       $.each(JSON.parse(resdata[$(this).val()]), function( index, value ) {
+        
         $("tbody").append("<tr><td>"+value.que+"</td><td>"+value.choices[value.user_choice_index]+"</td><td>"+value.choices[value.correct_choice_index]+"</td></tr>");
       }); 
       
