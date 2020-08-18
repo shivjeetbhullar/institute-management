@@ -1,0 +1,5 @@
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/waytojas/institute.antisoftindia.com"
+PassengerBaseURI "/"
+PassengerPython "/home/waytojas/virtualenv/institute.antisoftindia.com/3.8/bin/python3.8"
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
